@@ -1,0 +1,60 @@
+package com.example.btl_nhom7.model;
+
+public class Room {
+    String idRoom;
+    String name;
+    String device;
+    String task;
+    String method;
+
+    public Room(String idRoom, String name, String device, String task, String method) {
+        this.idRoom = idRoom;
+        this.name = name;
+        this.device = device;
+        this.task = task;
+        this.method = method;
+    }
+
+    public String getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(String idRoom) {
+        this.idRoom = idRoom;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+    public Room(){
+
+    }
+}
