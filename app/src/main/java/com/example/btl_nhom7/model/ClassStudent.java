@@ -1,11 +1,11 @@
 package com.example.btl_nhom7.model;
 
-public class ListStudentOfClass {
+public class ClassStudent {
     private String idStudent;
     private String idClass;
     private int rating;
 
-    public ListStudentOfClass(String idStudent, String idClass, int rating) {
+    public ClassStudent(String idStudent, String idClass, int rating) {
         this.idStudent = idStudent;
         this.idClass = idClass;
         this.rating = rating;
@@ -34,7 +34,7 @@ public class ListStudentOfClass {
     public void setRating(int rating) {
         this.rating = rating;
     }
-    public ListStudentOfClass(){
+    public ClassStudent(){
 
     }
 }
