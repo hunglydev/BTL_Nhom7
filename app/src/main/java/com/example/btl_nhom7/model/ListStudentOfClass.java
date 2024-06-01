@@ -1,9 +1,9 @@
 package com.example.btl_nhom7.model;
 
 public class ListStudentOfClass {
-    String idStudent;
-    String idClass;
-    int rating;
+    private String idStudent;
+    private String idClass;
+    private int rating;
 
     public ListStudentOfClass(String idStudent, String idClass, int rating) {
         this.idStudent = idStudent;

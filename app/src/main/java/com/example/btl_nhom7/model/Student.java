@@ -1,10 +1,9 @@
 package com.example.btl_nhom7.model;
 
 public class Student {
-    String idStudent;
-    String password;
-    String name;
-    String idClass;
+    private String idStudent;
+    private String password;
+    private String name;
 
     public String getIdStudent() {
         return idStudent;
@@ -30,19 +29,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getIdClass() {
-        return idClass;
-    }
 
-    public void setIdClass(String idClass) {
-        this.idClass = idClass;
-    }
-
-    public Student(String idStudent, String password, String name, String idClass) {
+    public Student(String idStudent, String password, String name) {
         this.idStudent = idStudent;
         this.password = password;
         this.name = name;
-        this.idClass = idClass;
+
     }
     public Student(){
 

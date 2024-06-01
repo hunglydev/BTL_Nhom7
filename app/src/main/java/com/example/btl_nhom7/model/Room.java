@@ -1,11 +1,11 @@
 package com.example.btl_nhom7.model;
 
 public class Room {
-    String idRoom;
-    String name;
-    String device;
-    String task;
-    String method;
+    private String idRoom;
+    private String name;
+    private String device;
+    private String task;
+    private String method;
 
     public Room(String idRoom, String name, String device, String task, String method) {
         this.idRoom = idRoom;
