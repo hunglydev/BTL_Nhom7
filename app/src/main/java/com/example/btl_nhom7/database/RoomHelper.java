@@ -24,7 +24,7 @@ public class RoomHelper extends SQLiteOpenHelper {
     public static String getTableName(){
         return  TABLE_NAME;
     }
-    public RoomHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public RoomHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 

@@ -12,9 +12,10 @@ public class ClassHelper extends SQLiteOpenHelper {
     private static final String COL_ID = "ClassID";
     private static final String COL_NAME = "Name";
 
-    public ClassHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public ClassHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
+
 
     public static String getTableName() {
         return  TABLE_NAME;
@@ -38,6 +39,7 @@ public class ClassHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 }

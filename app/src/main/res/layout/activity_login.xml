@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/password"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_button"
         android:layout_marginTop="20dp"
         android:text="Đăng nhập" />
 

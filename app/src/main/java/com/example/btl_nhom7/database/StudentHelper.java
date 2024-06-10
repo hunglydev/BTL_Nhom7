@@ -17,7 +17,7 @@ public class StudentHelper extends SQLiteOpenHelper {
         return  COL_ID;
     }
 
-    public StudentHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public StudentHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 
@@ -33,7 +33,7 @@ public class StudentHelper extends SQLiteOpenHelper {
                 + COL_ID + " TEXT PRIMARY KEY, "
                 + COL_NAME + " TEXT, "
                 + COL_PASSWORD + " TEXT, "
-                + COL_RATING + "INTEGER);";
+                + COL_RATING + " INTEGER);";
         db.execSQL(CREATE_TABLE_SINHVIEN);
     }
 

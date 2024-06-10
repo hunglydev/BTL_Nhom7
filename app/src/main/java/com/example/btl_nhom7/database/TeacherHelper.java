@@ -12,7 +12,7 @@ public class TeacherHelper extends SQLiteOpenHelper {
     private static final String COL_ID = "TeacherID";
     private static final String COL_PASSWORD = "Password";
     private static final String COL_NAME = "Name";
-    public TeacherHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public TeacherHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
     public static String getTableName() {

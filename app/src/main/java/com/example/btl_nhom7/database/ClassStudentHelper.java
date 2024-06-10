@@ -11,7 +11,7 @@ import com.example.btl_nhom7.model.Student;
 public class ClassStudentHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "ClassStudent";
-    public ClassStudentHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public ClassStudentHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 

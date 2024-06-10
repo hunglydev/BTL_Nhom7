@@ -12,7 +12,7 @@ public class AssignmentHelper extends SQLiteOpenHelper {
     private static final String COL_START_TIME = "StartTime";
     private static final String COL_END_TIME = "EndTime";
     private  static final String COL_STATUS = "Status";
-    public AssignmentHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public AssignmentHelper(@Nullable Context context) {
         super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 
