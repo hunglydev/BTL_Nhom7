@@ -7,14 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class ClassHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "TrucNhat.db";
-    private static final int DATABASE_VERSION = 1;
+
     private static final String TABLE_NAME = "Class";
-    private static final String COL_ID = "ID";
+    private static final String COL_ID = "ClassID";
     private static final String COL_NAME = "Name";
-    private static final String COL_ID_TEACHER = "ID Teacher";
+
     public ClassHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 
     public static String getTableName() {
@@ -27,11 +26,13 @@ public class ClassHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("PRAGMA foreign_keys=ON;");
+
         final String CREATE_TABLE_CLASS = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID + " TEXT PRIMARY KEY, "
                 + COL_NAME + " TEXT, "
-                + COL_ID_TEACHER + " TEXT, "
-                + "FOREIGN KEY (" + COL_ID_TEACHER + ") REFERENCES " + TeacherHelper.getTableName() + "(" + TeacherHelper.getTeacherID() + "));";
+                + TeacherHelper.getTeacherID() + " TEXT, "
+                + "FOREIGN KEY (" + TeacherHelper.getTeacherID() + ") REFERENCES " + TeacherHelper.getTableName() + "(" + TeacherHelper.getTeacherID() + "));";
         db.execSQL(CREATE_TABLE_CLASS);
     }
 

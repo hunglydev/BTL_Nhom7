@@ -7,27 +7,31 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class AssignmentHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "TrucNhat.db";
-    private static final int DATABASE_VERSION = 1;
+
     private static final String TABLE_NAME = "Assign";
-    private static final String COL_CLASS_ID = "ClassID";
-    private static final String COL_ROOM_ID = "RoomID";
     private static final String COL_START_TIME = "StartTime";
     private static final String COL_END_TIME = "EndTime";
+    private  static final String COL_STATUS = "Status";
     public AssignmentHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, ConfigDB.DATABASE_NAME, null, ConfigDB.DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("PRAGMA foreign_keys=ON;");
+
         final String CREATE_TABLE_ASSIGNMENT = "CREATE TABLE " + TABLE_NAME + " ("
-                + COL_CLASS_ID + " TEXT, "
+                + ClassHelper.getClassID() + " TEXT, "
                 + COL_START_TIME + " TEXT, "
                 + COL_END_TIME + " TEXT, "
-                + COL_ROOM_ID + " TEXT, "
-                + "PRIMARY KEY (" + COL_CLASS_ID + ", " + COL_START_TIME + ", " + COL_END_TIME + ", " + COL_ROOM_ID + "), "
-                + "FOREIGN KEY (" + COL_CLASS_ID + ") REFERENCES " + ClassHelper.getTableName() + "(" + ClassHelper.getClassID() + "), "
-                + "FOREIGN KEY (" + COL_ROOM_ID + ") REFERENCES " + RoomHelper.getColName() + "(" + RoomHelper.getColID() + "));";
+                + RoomHelper.getColID() + " TEXT, "
+                + TeacherHelper.getTeacherID() + " Text,"
+                + COL_STATUS + " Text,"
+                + "PRIMARY KEY (" + ClassHelper.getClassID() + ", " + COL_START_TIME + ", " + RoomHelper.getColID() + "), "
+                + "FOREIGN KEY (" + ClassHelper.getClassID() + ") REFERENCES " + ClassHelper.getTableName() + "(" + ClassHelper.getClassID() + "), "
+                + "FOREIGN KEY (" + TeacherHelper.getTeacherID() + ") REFERENCES " + TeacherHelper.getTableName() + "(" + TeacherHelper.getTableName() + "), "
+                + "FOREIGN KEY (" + RoomHelper.getColID() + ") REFERENCES " + RoomHelper.getColName() + "(" + RoomHelper.getColID() + "));";
+
         db.execSQL(CREATE_TABLE_ASSIGNMENT);
     }
 
