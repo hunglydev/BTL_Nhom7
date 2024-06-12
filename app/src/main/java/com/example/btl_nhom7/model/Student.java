@@ -4,6 +4,15 @@ public class Student {
     private String idStudent;
     private String password;
     private String name;
+    private int rating;
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     public String getIdStudent() {
         return idStudent;
@@ -30,10 +39,11 @@ public class Student {
     }
 
 
-    public Student(String idStudent, String password, String name) {
+    public Student(String idStudent, String password, String name, int rating) {
         this.idStudent = idStudent;
         this.password = password;
         this.name = name;
+        this.rating = rating;
 
     }
     public Student(){

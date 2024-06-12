@@ -5,9 +5,9 @@ public class Room {
     private String name;
     private String device;
     private String task;
-    private String method;
+    private int method;
 
-    public Room(String idRoom, String name, String device, String task, String method) {
+    public Room(String idRoom, String name, String device, String task, int method) {
         this.idRoom = idRoom;
         this.name = name;
         this.device = device;
@@ -47,11 +47,11 @@ public class Room {
         this.task = task;
     }
 
-    public String getMethod() {
+    public Integer getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(int method) {
         this.method = method;
     }
     public Room(){
