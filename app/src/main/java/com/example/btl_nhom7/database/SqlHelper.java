@@ -35,49 +35,49 @@ public class SqlHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("PRAGMA foreign_keys=ON;");
-        final String CREATE_TABLE_SINHVIEN = "CREATE TABLE " + TABLE_STUDENT + " ("
-                + "ID" + " TEXT PRIMARY KEY, "
-                + "Name" + " TEXT, "
-                + "Password" + " TEXT, "
-                + "Rating" + " INTEGER);";
-        db.execSQL(CREATE_TABLE_SINHVIEN);
-        final String CREATE_TABLE_TEACHER = "CREATE TABLE " + TABLE_TEACHER + " ("
-                + "ID" + " TEXT PRIMARY KEY, "
-                + "Name" + " TEXT, "
-                + "Password" + " TEXT);";
-        db.execSQL(CREATE_TABLE_TEACHER);
-        final String CREATE_TABLE_ROOM = "CREATE TABLE " + TABLE_ROOM + " ("
-                + "ID" + " TEXT PRIMARY KEY, "
-                + "Name" + " TEXT, "
-                + "Devices" + " TEXT, "
-                + "Task" + " TEXT, "
-                + "Method" + " INTEGER);";
-        db.execSQL(CREATE_TABLE_ROOM);
-        final String CREATE_TABLE_CLASS = "CREATE TABLE " + TABLE_CLASS + " ("
-                + "ID" + " TEXT PRIMARY KEY, "
-                + "Name" + " TEXT, "
-                + "TeacherID"+ " TEXT, "
-                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "ID" + "));";
-        db.execSQL(CREATE_TABLE_CLASS);
-        final String CREATE_CLASS_STUDENT = "CREATE TABLE " + TABLE_CLASS_STUDENT + " ("
-                + "ClassID" + " TEXT, "
-                + "StudentID" + " TEXT, "
-                + "PRIMARY KEY (" + "ClassID" + ", " + "StudentID" + "), "
-                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ID" + "), "
-                + "FOREIGN KEY (" + "StudentID" + ") REFERENCES " + TABLE_STUDENT + "(" + "ID" + "));";
-        db.execSQL(CREATE_CLASS_STUDENT);
-        final String CREATE_TABLE_ASSIGNMENT = "CREATE TABLE " + TABLE_ASSIGNMENT + " ("
-                + "ClassID" + " TEXT, "
-                + "Day" + " TEXT, "
-                + "StartTime" + " TEXT, "
-                + "EndTime" + " TEXT, "
-                + "RoomID" + " TEXT, "
-                + "TeacherID" + " Text,"
-                + "PRIMARY KEY (ClassID, Day, StartTime, RoomID), "
-                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ID" + "), "
-                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "ID" + "), "
-                + "FOREIGN KEY (" + "RoomID" + ") REFERENCES " + TABLE_ROOM + "(" + "ID"+ "));";
-        db.execSQL(CREATE_TABLE_ASSIGNMENT);
+        db.execSQL("CREATE TABLE " + TABLE_STUDENT + " (" +
+                "idStudent TEXT PRIMARY KEY, " +
+                "Name TEXT, " +
+                "Password TEXT);");
+
+        db.execSQL("CREATE TABLE " + TABLE_TEACHER + " (" +
+                "ID TEXT PRIMARY KEY, " +
+                "Name TEXT, " +
+                "Password TEXT);");
+
+        db.execSQL("CREATE TABLE " + TABLE_ROOM + " (" +
+                "ID TEXT PRIMARY KEY, " +
+                "Name TEXT, " +
+                "Devices TEXT, " +
+                "Task TEXT, " +
+                "Method INTEGER);");
+
+        db.execSQL("CREATE TABLE " + TABLE_CLASS + " (" +
+                "ID TEXT PRIMARY KEY, " +
+                "Name TEXT, " +
+                "TeacherID TEXT, " +
+                "FOREIGN KEY (TeacherID) REFERENCES " + TABLE_TEACHER + "(ID));");
+
+        db.execSQL("CREATE TABLE " + TABLE_CLASS_STUDENT + " (" +
+                "idStudent TEXT, " +
+                "idClass TEXT, " +
+                "rating INTEGER, " +
+                "className TEXT, " +
+                "PRIMARY KEY (idStudent, idClass), " +
+                "FOREIGN KEY (idStudent) REFERENCES " + TABLE_STUDENT + "(idStudent), " +
+                "FOREIGN KEY (idClass) REFERENCES " + TABLE_CLASS + "(ID));");
+
+        db.execSQL("CREATE TABLE " + TABLE_ASSIGNMENT + " (" +
+                "ClassID TEXT, " +
+                "Day TEXT, " +
+                "StartTime TEXT, " +
+                "EndTime TEXT, " +
+                "RoomID TEXT, " +
+                "TeacherID TEXT, " +
+                "PRIMARY KEY (ClassID, Day, StartTime, RoomID), " +
+                "FOREIGN KEY (ClassID) REFERENCES " + TABLE_CLASS + "(ID), " +
+                "FOREIGN KEY (TeacherID) REFERENCES " + TABLE_TEACHER + "(ID), " +
+                "FOREIGN KEY (RoomID) REFERENCES " + TABLE_ROOM + "(ID));");
     }
 
     @Override
@@ -122,8 +122,7 @@ public class SqlHelper extends SQLiteOpenHelper {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
                 String password = cursor.getString(2);
-                int rating = cursor.getInt(3);
-                students.add(new Student(id, name, password, rating));
+                students.add(new Student(id, name, password));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -180,10 +179,9 @@ public class SqlHelper extends SQLiteOpenHelper {
             String id = cursor.getString(0);
             String name = cursor.getString(1);
             String pwd = cursor.getString(2);
-            int rating = cursor.getInt(3);
             cursor.close();
             db.close();
-            return new Student(id, name, pwd, rating);
+            return new Student(id, name, pwd);
         }
         cursor.close();
         return null;
@@ -239,8 +237,7 @@ public class SqlHelper extends SQLiteOpenHelper {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
                 String password = cursor.getString(2);
-                int rating = cursor.getInt(3);
-                students.add(new Student(id, name, password, rating));
+                students.add(new Student(id, name, password));
             } while (cursor.moveToNext());
         }
         cursor.close();
