@@ -9,15 +9,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Calendar;
 
-public class Detail extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     private TextView tvStartTime, tvEndTime;
     private Button btnStartTime, btnEndTime;
@@ -44,7 +40,7 @@ public class Detail extends AppCompatActivity {
             public void onClick(View v) {
                 int hour = startTimeCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = startTimeCalendar.get(Calendar.MINUTE);
-                new TimePickerDialog(Detail.this, new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(DetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         startTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -60,7 +56,7 @@ public class Detail extends AppCompatActivity {
             public void onClick(View v) {
                 int hour = endTimeCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = endTimeCalendar.get(Calendar.MINUTE);
-                new TimePickerDialog(Detail.this, new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(DetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         endTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);

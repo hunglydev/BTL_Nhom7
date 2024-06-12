@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DetailOfClass extends AppCompatActivity {
+public class DetailOfClassActivity extends AppCompatActivity {
 
     private Button btnLogout;
     private TextView tvTitle;
@@ -28,7 +28,7 @@ public class DetailOfClass extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailOfClass.this, "Logged out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailOfClassActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
             }
         });
     }

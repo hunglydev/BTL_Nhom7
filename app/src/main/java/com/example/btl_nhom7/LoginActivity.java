@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.btl_nhom7.database.SqlHelper;
 import com.example.btl_nhom7.databinding.ActivityLoginBinding;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
