@@ -4,19 +4,20 @@ import android.graphics.SweepGradient;
 
 public class Assignment {
     private String idClass;
+    private String day;
     private String startTime;
     private String endTime;
     private String idRoom;
     private String idTeacher;
-    private int status;
 
-    public Assignment(String idClass, String startTime, String endTime, String idRoom, String idTeacher, int status) {
+    public Assignment(String idClass, String day, String startTime, String endTime, String idRoom, String idTeacher) {
         this.idClass = idClass;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         this.idRoom = idRoom;
         this.idTeacher = idTeacher;
-        this.status = status;
+
     }
 
     public String getIdClass() {
@@ -59,11 +60,11 @@ public class Assignment {
         this.idTeacher = idTeacher;
     }
 
-    public int getStatus() {
-        return status;
+    public String getDay() {
+        return day;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setDay(String day) {
+        this.day = day;
     }
 }

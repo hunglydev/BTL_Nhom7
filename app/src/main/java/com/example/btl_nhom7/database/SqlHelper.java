@@ -1,21 +1,31 @@
 package com.example.btl_nhom7.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.btl_nhom7.model.Assignment;
+import com.example.btl_nhom7.model.ClassStudent;
+import com.example.btl_nhom7.model.Student;
+import com.example.btl_nhom7.model.Teacher;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SqlHelper extends SQLiteOpenHelper {
-    private static String DATABASE = "TrucNhat.db";
+    private static final String DATABASE = "TrucNhat.db";
     public static final int DATABASE_VERSION = 1;
 
-    private static String TABLE_STUDENT = "Student";
-    private static String TABLE_TEACHER = "Teacher";
-    private static String TABLE_ROOM = "Room";
-    private static String TABLE_CLASS_STUDENT = "ClassStudent";
-    private static  String TABLE_CLASS = "Class";
-    private static String TABLE_ASSIGNMENT = "Assignment";
+    private static final String TABLE_STUDENT = "Student";
+    private static final String TABLE_TEACHER = "Teacher";
+    private static final String TABLE_ROOM = "Room";
+    private static final String TABLE_CLASS_STUDENT = "ClassStudent";
+    private static final String TABLE_CLASS = "Class";
+    private static final String TABLE_ASSIGNMENT = "Assignment";
 
 
     public SqlHelper(@Nullable Context context) {
@@ -47,26 +57,26 @@ public class SqlHelper extends SQLiteOpenHelper {
                 + "ID" + " TEXT PRIMARY KEY, "
                 + "Name" + " TEXT, "
                 + "TeacherID"+ " TEXT, "
-                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "TeacherID" + "));";
+                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "ID" + "));";
         db.execSQL(CREATE_TABLE_CLASS);
         final String CREATE_CLASS_STUDENT = "CREATE TABLE " + TABLE_CLASS_STUDENT + " ("
                 + "ClassID" + " TEXT, "
                 + "StudentID" + " TEXT, "
                 + "PRIMARY KEY (" + "ClassID" + ", " + "StudentID" + "), "
-                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ClassID" + "), "
-                + "FOREIGN KEY (" + "StudentID" + ") REFERENCES " + TABLE_STUDENT + "(" + "StudentID" + "));";
+                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ID" + "), "
+                + "FOREIGN KEY (" + "StudentID" + ") REFERENCES " + TABLE_STUDENT + "(" + "ID" + "));";
         db.execSQL(CREATE_CLASS_STUDENT);
         final String CREATE_TABLE_ASSIGNMENT = "CREATE TABLE " + TABLE_ASSIGNMENT + " ("
                 + "ClassID" + " TEXT, "
+                + "Day" + " TEXT, "
                 + "StartTime" + " TEXT, "
                 + "EndTime" + " TEXT, "
                 + "RoomID" + " TEXT, "
                 + "TeacherID" + " Text,"
-                + "Status" + " INTERGER,"
-                + "PRIMARY KEY (" + "ClassID" + ", " + "StartTime" + ", " + "RoomID" + "), "
-                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ClassID" + "), "
-                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "TeacherID" + "), "
-                + "FOREIGN KEY (" + "RoomID" + ") REFERENCES " + TABLE_ROOM + "(" + "RoomID"+ "));";
+                + "PRIMARY KEY (ClassID, Day, StartTime, RoomID), "
+                + "FOREIGN KEY (" + "ClassID" + ") REFERENCES " + TABLE_CLASS + "(" + "ID" + "), "
+                + "FOREIGN KEY (" + "TeacherID" + ") REFERENCES " + TABLE_TEACHER + "(" + "ID" + "), "
+                + "FOREIGN KEY (" + "RoomID" + ") REFERENCES " + TABLE_ROOM + "(" + "ID"+ "));";
         db.execSQL(CREATE_TABLE_ASSIGNMENT);
     }
 
@@ -81,4 +91,161 @@ public class SqlHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+
+    public void insertSampleData(SQLiteDatabase db) {
+        // Chèn dữ liệu vào bảng Student
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (ID, Name, Password, Rating) VALUES ('2021602743', 'Ly Hai Hung', '123123', 1);");
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (ID, Name, Password, Rating) VALUES ('2021602333', 'Tran Minh Hieu', '123123', 0);");
+
+        // Chèn dữ liệu vào bảng Teacher
+        db.execSQL("INSERT INTO " + TABLE_TEACHER + " (ID, Name, Password) VALUES ('T01', 'Vu Thi Duong', '123123');");
+
+        // Chèn dữ liệu vào bảng Room
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R01', 'Phong 101', 'Projector, Whiteboard', 'Lecture', 1);");
+
+        // Chèn dữ liệu vào bảng Class
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop 12A1', 'T01');");
+
+        // Chèn dữ liệu vào bảng ClassStudent
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (ClassID, StudentID) VALUES ('C01', '2021602743');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (ClassID, StudentID) VALUES ('C01', '2021602333T');");
+
+        // Chèn dữ liệu vào bảng Assignment
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C01','20-10-2023', '08:00', '10:00', 'R01', 'T01');");
+    }
+    public ArrayList<Student> getAllStudent(){
+        ArrayList<Student> students = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDENT, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String name = cursor.getString(1);
+                String password = cursor.getString(2);
+                int rating = cursor.getInt(3);
+                students.add(new Student(id, name, password, rating));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return students;
+    }
+
+    public ArrayList<Teacher> getAllTeacher(){
+        ArrayList<Teacher> teachers = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TEACHER, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String name = cursor.getString(1);
+                String password = cursor.getString(2);
+                teachers.add(new Teacher(id, name, password));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return teachers;
+    }
+
+    public ArrayList<Assignment> getAllAssignmentOfClass(String classID){
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define a SQL query to retrieve all assignments
+        String query = "SELECT * FROM " + TABLE_ASSIGNMENT + " WHERE ClassID = '" + classID + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String classId = cursor.getString(0);
+                String day = cursor.getString(1);
+                String startTime = cursor.getString(2);
+                String endTime = cursor.getString(3);
+                String roomId = cursor.getString(4);
+                String teacherId = cursor.getString(5);
+
+                // Create an Assignment object and add it to the list
+                assignments.add(new Assignment(classId,day, startTime, endTime, roomId, teacherId));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();  // Don't forget to close the database and cursor
+        return assignments;
+    }
+    public Student checkStudentLogin(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDENT + " WHERE ID = ? AND Password = ?", new String[]{username, password});
+        if (cursor.moveToFirst()) {
+            String id = cursor.getString(0);
+            String name = cursor.getString(1);
+            String pwd = cursor.getString(2);
+            int rating = cursor.getInt(3);
+            cursor.close();
+            db.close();
+            return new Student(id, name, pwd, rating);
+        }
+        cursor.close();
+        return null;
+    }
+    public ArrayList<String> getClassOfStudent(String studentID){
+        ArrayList<String> listID = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT ClassID FROM " + TABLE_CLASS_STUDENT + " WHERE StudentID = ?", new String[]{studentID});
+        if (cursor.moveToFirst()) {
+            do {
+                String idClass = cursor.getString(0);
+                listID.add(idClass);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listID;
+    }
+    // Method to check teacher credentials
+    public Teacher checkTeacherLogin(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TEACHER + " WHERE ID = ? AND Password = ?", new String[]{username, password});
+        if (cursor.moveToFirst()) {
+            String id = cursor.getString(0);
+            String name = cursor.getString(1);
+            String pwd = cursor.getString(2);
+            cursor.close();
+            db.close();
+            return new Teacher(id, name, pwd);
+        }
+        cursor.close();
+        db.close();
+        return null;
+    }
+    public void updateStudentDutyStatus(String studentId, int status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Rating", status); // 0: chưa phân công, 1: đang phân công, 2: đã trực nhật
+        db.update(TABLE_STUDENT, values, "ID = ?", new String[]{studentId});
+        db.close();
+    }
+    public ArrayList<Student> getStudentsByStatusAndClass(int status, String classId) {
+        ArrayList<Student> students = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT Student.ID, Student.Name, Student.Password, Student.Rating FROM Student " +
+                "INNER JOIN ClassStudent ON Student.ID = ClassStudent.StudentID " +
+                "WHERE Student.Rating = ? AND ClassStudent.ClassID = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(status), classId});
+
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String name = cursor.getString(1);
+                String password = cursor.getString(2);
+                int rating = cursor.getInt(3);
+                students.add(new Student(id, name, password, rating));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return students;
+    }
+
+
 }
