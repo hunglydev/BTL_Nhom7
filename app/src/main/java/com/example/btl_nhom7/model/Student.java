@@ -1,5 +1,7 @@
 package com.example.btl_nhom7.model;
 
+import androidx.annotation.NonNull;
+
 public class Student {
     private String idStudent;
     private String password;
@@ -39,5 +41,11 @@ public class Student {
     }
     public Student(){
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.idStudent + " - " + this.name;
     }
 }

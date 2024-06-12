@@ -2,6 +2,7 @@ package com.example.btl_nhom7;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,9 +14,13 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.btl_nhom7.database.SqlHelper;
 import com.example.btl_nhom7.databinding.ActivityDetailBinding;
+import com.example.btl_nhom7.model.DetailedAssignment;
+import com.example.btl_nhom7.model.Student;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -39,9 +44,32 @@ public class DetailActivity extends AppCompatActivity {
         startTimeCalendar = Calendar.getInstance();
         endTimeCalendar = Calendar.getInstance();
 
+        Intent intent = getIntent();
+        String classID = intent.getStringExtra("classID");
+        String roomID = intent.getStringExtra("roomID");
+        String startTime = intent.getStringExtra("startTime");
+        SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
+        ArrayList<Student> students = sqlHelper.getStudentsInClassWithRating(classID,1);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        if (assignment != null) {
+            // Update your UI with the information from assignment
+            binding.edClass.setText(assignment.getClassName());
+            binding.txtSeletedDate.setText(assignment.getDay());
+            binding.tvStartTime.setText(assignment.getStartTime());
+            binding.tvEndTime.setText(assignment.getEndTime());
+            binding.etRoom.setText(assignment.getRoomName());
+            if(assignment.getRoomType()==0){
+                binding.rbTheory.setChecked(true);
+                binding.rbPractice.setChecked(false);
+            }
+            else{
+
+                binding.rbPractice.setChecked(true);binding.rbTheory.setChecked(false);
+            }
+        }
         ListView lvStudents = findViewById(R.id.lvStudents);
-        String[] students = {"Trần Minh Hiếu","Lý Hải Hưng"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+        ArrayAdapter<Student> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+        lvStudents.setAdapter(adapter);
         lvStudents.setAdapter(adapter);
         binding.btnSelectDate.setOnClickListener(v -> {
             final Calendar calendar = Calendar.getInstance();

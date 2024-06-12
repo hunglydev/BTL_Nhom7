@@ -15,14 +15,22 @@ import com.example.btl_nhom7.model.Assignment;
 import java.util.ArrayList;
 
 
-public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder>{
+public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder> {
     private Context mContext;
     private ArrayList<Assignment> assignments;
+    private OnItemClickListener listener;
 
-    public AssignmentAdapter(Context mContext) {
-        this.mContext = mContext;
+    // Interface for handling clicks - each method passes the position and the view
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
     }
-    public void setData(ArrayList<Assignment> list){
+
+    public AssignmentAdapter(Context mContext, OnItemClickListener listener) {
+        this.mContext = mContext;
+        this.listener = listener;
+    }
+
+    public void setData(ArrayList<Assignment> list) {
         this.assignments = list;
         notifyDataSetChanged();
     }
@@ -30,36 +38,46 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
     @NonNull
     @Override
     public AssignmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.assignment_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.assignment_item, parent, false);
         return new AssignmentViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AssignmentViewHolder holder, int position) {
         Assignment assignment = assignments.get(position);
-        if(assignment==null){
+        if (assignment == null) {
             return;
         }
-        holder.txtSTT.setText(String.valueOf(position+1));
+        holder.txtSTT.setText(String.valueOf(position + 1));
         holder.txtDate.setText(assignment.getDay());
         holder.txtStartTime.setText(assignment.getStartTime());
         holder.txtEndTime.setText(assignment.getEndTime());
         holder.txtRoom.setText(assignment.getIdRoom());
+
+        // Bind the click listener to the view holder
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(view, position);
+            }
+        });
     }
+
     @Override
     public int getItemCount() {
-        if(assignments!=null){
-            return  assignments.size();
+        if (assignments != null) {
+            return assignments.size();
         }
         return 0;
     }
 
-    public class AssignmentViewHolder extends  RecyclerView.ViewHolder{
+    public class AssignmentViewHolder extends RecyclerView.ViewHolder {
         private TextView txtSTT;
         private TextView txtDate;
         private TextView txtStartTime;
         private TextView txtEndTime;
         private TextView txtRoom;
+
         public AssignmentViewHolder(@NonNull View itemView) {
             super(itemView);
             txtSTT = itemView.findViewById(R.id.txtasstt);

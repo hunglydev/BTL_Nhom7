@@ -1,30 +1,17 @@
 package com.example.btl_nhom7;
-
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.btl_nhom7.adapter.AssignmentAdapter;
 import com.example.btl_nhom7.database.SqlHelper;
 import com.example.btl_nhom7.databinding.ActivityDetailOfClassBinding;
 import com.example.btl_nhom7.model.Assignment;
-
 import java.util.ArrayList;
-
 public class DetailOfClassActivity extends AppCompatActivity {
     ActivityDetailOfClassBinding binding;
     ArrayList<Assignment> assignments = new ArrayList<>();
@@ -57,7 +44,17 @@ public class DetailOfClassActivity extends AppCompatActivity {
 
     private void setupRecyclerView(String classId) {
         ArrayList<Assignment> assignments = sqlHelper.getAllAssignmentOfClass(classId);
-        AssignmentAdapter adapter = new AssignmentAdapter(this);
+        AssignmentAdapter adapter = new AssignmentAdapter(this, new AssignmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                // Handle the click event with itemView and position
+                Intent intent = new Intent(DetailOfClassActivity.this, DetailActivity.class);
+                intent.putExtra("classID", assignments.get(position).getIdClass());
+                intent.putExtra("roomID", assignments.get(position).getIdRoom());
+                intent.putExtra("startTime", assignments.get(position).getStartTime());
+                startActivity(intent);
+            }
+        });
         adapter.setData(assignments);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.rcvDetailOfClass.setLayoutManager(linearLayoutManager);

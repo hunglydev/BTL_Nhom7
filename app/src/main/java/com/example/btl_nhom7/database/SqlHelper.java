@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import com.example.btl_nhom7.model.Assignment;
+import com.example.btl_nhom7.model.DetailedAssignment;
 import com.example.btl_nhom7.model.Student;
 import com.example.btl_nhom7.model.Teacher;
 import java.util.ArrayList;
@@ -101,13 +102,14 @@ public class SqlHelper extends SQLiteOpenHelper {
         // Insert data into the Class table
         db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop 12A1', 'T01');");
 
-        // Insert data into the ClassStudent table
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 0, 'Lop 12A1');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 0, 'Lop 12A1');");
+        // Insert data into the ClassStudent table, note the inclusion of className and rating.
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 1, 'Lop 12A1');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 1, 'Lop 12A1');");
 
         // Insert data into the Assignment table
         db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C01', '20-10-2023', '08:00', '10:00', 'R01', 'T01');");
     }
+
 
     public ArrayList<Student> getAllStudent(){
         ArrayList<Student> students = new ArrayList<>();
@@ -118,7 +120,7 @@ public class SqlHelper extends SQLiteOpenHelper {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
                 String password = cursor.getString(2);
-                students.add(new Student(id, name, password));
+                students.add(new Student(id, password, name));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -170,7 +172,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
     public Student checkStudentLogin(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDENT + " WHERE ID = ? AND Password = ?", new String[]{username, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STUDENT + " WHERE idStudent = ? AND Password = ?", new String[]{username, password});
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
             String name = cursor.getString(1);
@@ -185,7 +187,8 @@ public class SqlHelper extends SQLiteOpenHelper {
     public ArrayList<String> getClassOfStudent(String studentID){
         ArrayList<String> listID = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT ClassID FROM " + TABLE_CLASS_STUDENT + " WHERE StudentID = ?", new String[]{studentID});
+        // Đảm bảo sử dụng đúng tên cột "idClass" thay vì "ClassID"
+        Cursor cursor = db.rawQuery("SELECT idClass FROM " + TABLE_CLASS_STUDENT + " WHERE idStudent = ?", new String[]{studentID});
         if (cursor.moveToFirst()) {
             do {
                 String idClass = cursor.getString(0);
@@ -196,6 +199,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();
         return listID;
     }
+
     // Method to check teacher credentials
     public Teacher checkTeacherLogin(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -227,12 +231,54 @@ public class SqlHelper extends SQLiteOpenHelper {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
                 String password = cursor.getString(2);
-                students.add(new Student(id, name, password));
+                students.add(new Student(id, password, name));
             } while (cursor.moveToNext());
         }
         cursor.close();
         return students;
     }
 
+    public ArrayList<Student> getStudentsInClassWithRating(String classId, int rating) {
+        ArrayList<Student> students = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Ensure your query correctly handles the inner join and where conditions
+        Cursor cursor = db.rawQuery("SELECT Student.idStudent, Student.Password, Student.Name FROM Student INNER JOIN ClassStudent ON Student.idStudent = ClassStudent.idStudent WHERE ClassStudent.idClass = ? AND ClassStudent.rating = ?", new String[]{classId,  String.valueOf(rating)});
 
+        while (cursor.moveToNext()) {
+            String idStudent = cursor.getString(0);
+            String name = cursor.getString(2);
+            String password = cursor.getString(1);
+            // Assuming Constructor Student(idStudent, name, password)
+            students.add(new Student(idStudent, name, password));
+        }
+        cursor.close();
+        db.close();
+        return students;
+    }
+    public DetailedAssignment getDetailedAssignment(String classID, String roomID, String startTime) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        DetailedAssignment detailedAssignment = null;
+
+        String query = "SELECT Class.Name, Assignment.Day, Assignment.StartTime, Assignment.EndTime, Room.Name, Room.Method " +
+                "FROM Assignment " +
+                "JOIN Class ON Assignment.ClassID = Class.ID " +
+                "JOIN Room ON Assignment.RoomID = Room.ID " +
+                "WHERE Assignment.ClassID = ? AND Assignment.RoomID = ? AND Assignment.StartTime = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{classID, roomID, startTime});
+        if (cursor.moveToFirst()) {
+            String className = cursor.getString(0);
+            String day = cursor.getString(1);
+            String start = cursor.getString(2);
+            String end = cursor.getString(3);
+            String roomName = cursor.getString(4);
+            int method = cursor.getInt(5);
+
+
+            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method);
+        }
+        cursor.close();
+        db.close();
+        return detailedAssignment;
+    }
 }
