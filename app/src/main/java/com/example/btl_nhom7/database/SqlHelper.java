@@ -1,20 +1,15 @@
 package com.example.btl_nhom7.database;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import androidx.annotation.Nullable;
-
 import com.example.btl_nhom7.model.Assignment;
-import com.example.btl_nhom7.model.ClassStudent;
 import com.example.btl_nhom7.model.Student;
 import com.example.btl_nhom7.model.Teacher;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class SqlHelper extends SQLiteOpenHelper {
     private static final String DATABASE = "TrucNhat.db";
@@ -93,26 +88,27 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
     public void insertSampleData(SQLiteDatabase db) {
-        // Chèn dữ liệu vào bảng Student
-        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (ID, Name, Password, Rating) VALUES ('2021602743', 'Ly Hai Hung', '123123', 1);");
-        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (ID, Name, Password, Rating) VALUES ('2021602333', 'Tran Minh Hieu', '123123', 0);");
+        // Insert data into the Student table
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602743', 'Ly Hai Hung', '123123');");
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602333', 'Tran Minh Hieu', '123123');");
 
-        // Chèn dữ liệu vào bảng Teacher
+        // Insert data into the Teacher table
         db.execSQL("INSERT INTO " + TABLE_TEACHER + " (ID, Name, Password) VALUES ('T01', 'Vu Thi Duong', '123123');");
 
-        // Chèn dữ liệu vào bảng Room
+        // Insert data into the Room table
         db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R01', 'Phong 101', 'Projector, Whiteboard', 'Lecture', 1);");
 
-        // Chèn dữ liệu vào bảng Class
+        // Insert data into the Class table
         db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop 12A1', 'T01');");
 
-        // Chèn dữ liệu vào bảng ClassStudent
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (ClassID, StudentID) VALUES ('C01', '2021602743');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (ClassID, StudentID) VALUES ('C01', '2021602333T');");
+        // Insert data into the ClassStudent table
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 0, 'Lop 12A1');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 0, 'Lop 12A1');");
 
-        // Chèn dữ liệu vào bảng Assignment
-        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C01','20-10-2023', '08:00', '10:00', 'R01', 'T01');");
+        // Insert data into the Assignment table
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C01', '20-10-2023', '08:00', '10:00', 'R01', 'T01');");
     }
+
     public ArrayList<Student> getAllStudent(){
         ArrayList<Student> students = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -216,13 +212,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();
         return null;
     }
-    public void updateStudentDutyStatus(String studentId, int status) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Rating", status); // 0: chưa phân công, 1: đang phân công, 2: đã trực nhật
-        db.update(TABLE_STUDENT, values, "ID = ?", new String[]{studentId});
-        db.close();
-    }
+
     public ArrayList<Student> getStudentsByStatusAndClass(int status, String classId) {
         ArrayList<Student> students = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

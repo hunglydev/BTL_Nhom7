@@ -23,12 +23,31 @@
         android:hint="Lớp"
         android:inputType="text"/>
 
-    <EditText
-        android:id="@+id/etDate"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ngày"
-        android:inputType="date" />
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ngày"
+            android:gravity="center_vertical"/>
+
+        <Button
+            android:id="@+id/btnSelectDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txtSeletedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18-11-2023"
+        android:gravity="center_vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,6 +118,7 @@
         android:layout_marginTop="16dp">
 
         <RadioButton
+            android:checked="true"
             android:id="@+id/rbTheory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +138,7 @@
         android:layout_marginTop="16dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="383dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -138,13 +158,13 @@
             android:id="@+id/cbDevice3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="abc" />
+            android:text="Quạt" />
 
         <CheckBox
             android:id="@+id/cbDevice4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="def" />
+            android:text="Đèn" />
     </LinearLayout>
 
     <TextView

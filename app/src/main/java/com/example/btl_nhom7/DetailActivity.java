@@ -1,17 +1,23 @@
 package com.example.btl_nhom7;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.btl_nhom7.databinding.ActivityDetailBinding;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -19,10 +25,12 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnStartTime, btnEndTime;
 
     private Calendar startTimeCalendar, endTimeCalendar;
+    ActivityDetailBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         tvStartTime = (TextView) findViewById(R.id.tvStartTime);
         tvEndTime = findViewById(R.id.tvEndTime);
@@ -35,6 +43,29 @@ public class DetailActivity extends AppCompatActivity {
         String[] students = {"Trần Minh Hiếu","Lý Hải Hưng"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
         lvStudents.setAdapter(adapter);
+        binding.btnSelectDate.setOnClickListener(v -> {
+            final Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and show it
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    // Use the selected date as you need
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, monthOfYear);
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                    // Format the date and set it to TextView
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    binding.txtSeletedDate.setText(dateFormat.format(calendar.getTime()));
+                }
+            }, year, month, day);
+
+            datePickerDialog.show();
+        });
         btnStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
