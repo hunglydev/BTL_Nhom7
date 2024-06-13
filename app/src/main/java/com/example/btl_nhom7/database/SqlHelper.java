@@ -281,4 +281,25 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();
         return detailedAssignment;
     }
+
+    public ArrayList<String> getClassesOfTeacher(String teacherId) {
+        ArrayList<String> classIDs = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Định nghĩa truy vấn SQL để lấy tất cả ID lớp học mà giáo viên này dạy
+        String query = "SELECT ID FROM " + TABLE_CLASS + " WHERE TeacherID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{teacherId});
+
+        // Lặp qua kết quả và thêm vào danh sách
+        if (cursor.moveToFirst()) {
+            do {
+                String classId = cursor.getString(0); // Lấy ID của lớp
+                classIDs.add(classId);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return classIDs;
+    }
 }
