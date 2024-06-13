@@ -278,7 +278,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         DetailedAssignment detailedAssignment = null;
 
-        String query = "SELECT Class.Name, Assignment.Day, Assignment.StartTime, Assignment.EndTime, Room.Name, Room.Method " +
+        String query = "SELECT Class.Name, Assignment.Day, Assignment.StartTime, Assignment.EndTime, Room.Name, Room.Method, Room.Task " +
                 "FROM Assignment " +
                 "JOIN Class ON Assignment.ClassID = Class.ID " +
                 "JOIN Room ON Assignment.RoomID = Room.ID " +
@@ -292,14 +292,15 @@ public class SqlHelper extends SQLiteOpenHelper {
             String end = cursor.getString(3);
             String roomName = cursor.getString(4);
             int method = cursor.getInt(5);
+            String task = cursor.getString(6);
 
-
-            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method);
+            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method, task);
         }
         cursor.close();
         db.close();
         return detailedAssignment;
     }
+
 
     public ArrayList<String> getClassesOfTeacher(String teacherId) {
         ArrayList<String> classIDs = new ArrayList<>();

@@ -46,6 +46,7 @@ public class TeacherDetailClassActivity extends AppCompatActivity {
         binding.btnLogout.setOnClickListener(v -> {
             finish();
         });
+
     }
 
     private void setupRecyclerView(String classId) {

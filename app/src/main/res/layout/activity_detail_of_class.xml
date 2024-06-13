@@ -77,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="550dp" />
     <Button
+        android:background="@drawable/rounded_button"
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_gravity="center"

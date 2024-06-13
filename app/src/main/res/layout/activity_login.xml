@@ -17,6 +17,8 @@
 
     <!-- Username EditText -->
     <EditText
+        android:background="@drawable/rounded_edittext"
+
         android:id="@+id/txtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +30,8 @@
 
     <!-- Password EditText -->
     <EditText
+        android:background="@drawable/rounded_edittext"
+
         android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

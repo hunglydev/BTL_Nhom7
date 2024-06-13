@@ -64,13 +64,13 @@
                 android:id="@+id/cbDevice1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy chiếu" />
+                android:text="A" />
 
             <CheckBox
                 android:id="@+id/cbDevice2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Điều hòa" />
+                android:text="B" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,13 +84,13 @@
                     android:id="@+id/cbDevice3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quạt" />
+                    android:text="C" />
 
                 <CheckBox
                     android:id="@+id/cbDevice4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Điều khiển" />
+                    android:text="D" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -102,7 +102,7 @@
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sinh viên thực hiện"/>
+            android:text="Lý do hư hại (Nếu có)"/>
         <EditText
             android:background="@drawable/rounded_edittext"
             android:layout_width="match_parent"
@@ -120,15 +120,15 @@
            android:orientation="horizontal">
            <RadioButton
                android:layout_marginRight="20dp"
-               android:id="@+id/rdNotDone"
+               android:id="@+id/rdNotComplete"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="Chưa hoàn thành"/>
            <RadioButton
-               android:id="@+id/Done"
+               android:id="@+id/rdComplete"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Chưa hoàn thành"/>
+               android:text="Đã hoàn thành"/>
        </RadioGroup>
     </LinearLayout>
     <Button

@@ -50,8 +50,8 @@ public class AssignmentActivity extends AppCompatActivity {
             setResult(RESULT_OK); // Set RESULT_OK to trigger refresh in the previous activity
             finish();
         });
-    }
 
+    }
     private void refreshStudentList() {
         students = sqlHelper.getStudentsInClassWithRating(classID, 0);
         studentArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);

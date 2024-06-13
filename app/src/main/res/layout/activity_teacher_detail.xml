@@ -17,6 +17,8 @@
         android:layout_gravity="center" />
 
     <EditText
+        android:background="@drawable/rounded_edittext"
+
         android:id="@+id/edClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
             android:gravity="center_vertical"/>
 
         <Button
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnSelectDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,6 +66,7 @@
             android:gravity="center_vertical"/>
 
         <Button
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +94,7 @@
             android:gravity="center_vertical"/>
 
         <Button
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,6 +109,8 @@
         android:layout_marginTop="8dp"/>
 
     <EditText
+        android:background="@drawable/rounded_edittext"
+
         android:id="@+id/etRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -159,17 +166,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <CheckBox
-                android:id="@+id/cbDevice1"
+                android:id="@+id/cbDevice3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Máy chiếu" />
 
-            <CheckBox
-                android:id="@+id/cbDevice2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Điều hòa" />
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cbDevice4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Điều hòa" />
     </LinearLayout>
 
     <TextView
@@ -191,24 +199,28 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Trở lại"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_height="167dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btnRating"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Đánh giá"/>
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="Đánh giá" />
 
         <Button
             android:id="@+id/btnConfirm"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Phân công"/>
+            android:background="@drawable/rounded_button"
+            android:text="Phân công" />
     </LinearLayout>
 
 </LinearLayout>

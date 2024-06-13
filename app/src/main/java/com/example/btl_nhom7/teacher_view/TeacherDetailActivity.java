@@ -83,6 +83,20 @@ public class TeacherDetailActivity extends AppCompatActivity {
            intent1.putExtra("classID", classID);
            startActivity(intent1);
         });
+        binding.btnRating.setOnClickListener(v -> {
+            Intent intentRating = new Intent(this, RatingActivity.class);
+            // Gửi các thông tin cần thiết
+            intentRating.putExtra("classID", classID);
+            intentRating.putExtra("className", assignment.getClassName());
+            intentRating.putExtra("date", assignment.getDay());
+            intentRating.putExtra("startTime", assignment.getStartTime());
+            intentRating.putExtra("endTime", assignment.getEndTime());
+            intentRating.putExtra("roomName", assignment.getRoomName());
+            intentRating.putExtra("roomType", assignment.getRoomType()); // 0 là lý thuyết, 1 là thực hành
+            intentRating.putExtra("task", assignment.getTask());
+            intentRating.putExtra("roomID", roomID);
+            startActivity(intentRating);
+        });
 
     }
 

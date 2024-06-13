@@ -180,6 +180,7 @@
         android:layout_marginTop="16dp">
 
         <Button
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

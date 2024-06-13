@@ -17,7 +17,7 @@
         android:layout_marginBottom="16dp"/>
 
     <Button
-
+        android:background="@drawable/rounded_button"
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,6 +31,7 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:background="@drawable/rounded_edittext"
         android:id="@+id/etMSV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,6 +45,8 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:background="@drawable/rounded_edittext"
+
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,24 +67,22 @@
         android:layout_marginTop="8dp"/>
 
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Xóa"/>
+
 
         <Button
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnAssign"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Phân công"/>
+
     </LinearLayout>
 
 </LinearLayout>
