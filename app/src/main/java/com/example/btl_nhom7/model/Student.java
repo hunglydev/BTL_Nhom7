@@ -33,10 +33,10 @@ public class Student {
     }
 
 
-    public Student(String idStudent, String password, String name) {
+    public Student(String idStudent, String name, String password) {
         this.idStudent = idStudent;
-        this.password = password;
         this.name = name;
+        this.password = password;
 
     }
     public Student(){

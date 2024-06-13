@@ -43,7 +43,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.As
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AssignmentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AssignmentViewHolder holder,  int position) {
         Assignment assignment = assignments.get(position);
         if (assignment == null) {
             return;

@@ -92,23 +92,42 @@ public class SqlHelper extends SQLiteOpenHelper {
         // Insert data into the Student table
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602743', 'Ly Hai Hung', '123123');");
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602333', 'Tran Minh Hieu', '123123');");
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602334', 'Nguyen Van A', 'abc123');");
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (idStudent, Name, Password) VALUES ('2021602335', 'Pham Thi B', 'xyz789');");
 
         // Insert data into the Teacher table
         db.execSQL("INSERT INTO " + TABLE_TEACHER + " (ID, Name, Password) VALUES ('T01', 'Vu Thi Duong', '123123');");
+        db.execSQL("INSERT INTO " + TABLE_TEACHER + " (ID, Name, Password) VALUES ('T02', 'Nguyen Van C', 'pass456');");
 
         // Insert data into the Room table
         db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R01', 'Phong 101', 'Projector, Whiteboard', 'Lecture', 1);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R02', 'Phong 102', 'Computers, Projector', 'Lab', 0);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R03', 'Lab 301', 'Computers, Projector', 'Lab', 1);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R04', 'Phong 104', 'Whiteboard', 'Seminar', 0);");
 
         // Insert data into the Class table
         db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop 12A1', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C02', 'Lop 12A2', 'T02');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C03', 'Lop 12A3', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C04', 'Lop 12A4', 'T02');");
 
-        // Insert data into the ClassStudent table, note the inclusion of className and rating.
+        // Insert data into the ClassStudent table
         db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 1, 'Lop 12A1');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 1, 'Lop 12A1');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C02', 0, 'Lop 12A2');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C03', 2, 'Lop 12A3');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 0, 'Lop 12A2');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C03', 0, 'Lop 12A2');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C01', 2, 'Lop 12A3');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C03', 0, 'Lop 12A3');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C01', 1, 'Lop 12A4');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C02', 1, 'Lop 12A2');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C04', 1, 'Lop 12A4');");
 
         // Insert data into the Assignment table
-        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C01', '20-10-2023', '08:00', '10:00', 'R01', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C03', '22-10-2023', '10:00', '12:00', 'R03', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C04', '23-10-2023', '11:00', '13:00', 'R04', 'T02');");
     }
+
 
 
     public ArrayList<Student> getAllStudent(){
@@ -242,12 +261,12 @@ public class SqlHelper extends SQLiteOpenHelper {
         ArrayList<Student> students = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         // Ensure your query correctly handles the inner join and where conditions
-        Cursor cursor = db.rawQuery("SELECT Student.idStudent, Student.Password, Student.Name FROM Student INNER JOIN ClassStudent ON Student.idStudent = ClassStudent.idStudent WHERE ClassStudent.idClass = ? AND ClassStudent.rating = ?", new String[]{classId,  String.valueOf(rating)});
+        Cursor cursor = db.rawQuery("SELECT Student.idStudent, Student.Name, Student.Password FROM Student INNER JOIN ClassStudent ON Student.idStudent = ClassStudent.idStudent WHERE ClassStudent.idClass = ? AND ClassStudent.rating = ?", new String[]{classId,  String.valueOf(rating)});
 
         while (cursor.moveToNext()) {
             String idStudent = cursor.getString(0);
-            String name = cursor.getString(2);
-            String password = cursor.getString(1);
+            String name = cursor.getString(1);
+            String password = cursor.getString(2);
             // Assuming Constructor Student(idStudent, name, password)
             students.add(new Student(idStudent, name, password));
         }
@@ -302,4 +321,15 @@ public class SqlHelper extends SQLiteOpenHelper {
 
         return classIDs;
     }
+    public void updateStudentRating(String studentId, String classId, int newRating) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("rating", newRating);
+        String whereClause = "idStudent = ? AND idClass = ?";
+        String[] whereArgs = {studentId, classId};
+        db.update(TABLE_CLASS_STUDENT, values, whereClause, whereArgs);
+        db.close();
+    }
+
+
 }

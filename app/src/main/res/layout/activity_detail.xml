@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Phòng"
-        android:inputType="text"
+        android:textSize="16sp"
         android:layout_marginTop="16dp"/>
 
     <RadioGroup
@@ -109,13 +109,15 @@
             android:id="@+id/rbTheory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lý thuyết"/>
+            android:text="Lý thuyết"
+            android:enabled="false"/>
 
         <RadioButton
             android:id="@+id/rbPractice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thực hành"/>
+            android:text="Thực hành"
+            android:enabled="false"/>
     </RadioGroup>
 
     <TextView
@@ -133,25 +135,29 @@
             android:id="@+id/cbDevice1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Máy chiếu" />
+            android:text="Máy chiếu"
+            android:enabled="false" />
 
         <CheckBox
             android:id="@+id/cbDevice2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Điều hòa" />
+            android:text="Điều hòa"
+            android:enabled="false" />
 
         <CheckBox
             android:id="@+id/cbDevice3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quạt" />
+            android:text="Quạt"
+            android:enabled="false" />
 
         <CheckBox
             android:id="@+id/cbDevice4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đèn" />
+            android:text="Đèn"
+            android:enabled="false" />
     </LinearLayout>
 
     <TextView
