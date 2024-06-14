@@ -55,6 +55,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
         DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
+        String task = sqlHelper.getRoomTask(roomID);
+        binding.txtTask.setText(task);
 
         if (assignment != null) {
             binding.edClass.setText(assignment.getClassName());

@@ -50,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
         ArrayList<Student> students = sqlHelper.getStudentsInClassWithRating(classID,1);
         DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        String task = sqlHelper.getRoomTask(roomID);
+        binding.txtTask.setText(task);
         if (assignment != null) {
             // Update your UI with the information from assignment
             binding.edClass.setText(assignment.getClassName());
@@ -75,10 +77,10 @@ public class DetailActivity extends AppCompatActivity {
     private void disableButton(){
         binding.rbPractice.setClickable(false);
         binding.rbTheory.setClickable(false);
-        binding.cbDevice1.setClickable(false);
-        binding.cbDevice2.setClickable(false);
-        binding.cbDevice3.setClickable(false);
-        binding.cbDevice4.setClickable(false);
+//        binding.cbDevice1.setClickable(false);
+//        binding.cbDevice2.setClickable(false);
+//        binding.cbDevice3.setClickable(false);
+//        binding.cbDevice4.setClickable(false);
     }
 }
 

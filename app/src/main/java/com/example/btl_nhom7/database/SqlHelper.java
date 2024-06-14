@@ -333,4 +333,21 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
 
+    public String getRoomTask(String roomID) {
+        SQLiteDatabase db = this.getReadableDatabase();  // Get access to the readable database
+        String task = null;  // Initialize the task string to null
+
+        // Define a SQL query string
+        String query = "SELECT Task FROM " + TABLE_ROOM + " WHERE ID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{roomID});  // Execute the query
+
+        // Check if the query returned any results
+        if (cursor.moveToFirst()) {
+            task = cursor.getString(0);  // Get the first column of the cursor, which should be 'Task'
+        }
+        cursor.close();  // Close the cursor to release resources
+        db.close();      // Close the database connection
+        return task;     // Return the retrieved task or null if not found
+    }
+
 }

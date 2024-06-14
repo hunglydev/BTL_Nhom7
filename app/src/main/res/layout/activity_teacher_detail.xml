@@ -1,226 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".teacher_view.TeacherDetailActivity">
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chi tiết công việc"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center" />
-
-    <EditText
-        android:background="@drawable/rounded_edittext"
-
-        android:id="@+id/edClass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Lớp"
-        android:inputType="text"/>
-
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".teacher_view.TeacherDetailActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết công việc"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btnBack"
+            android:layout_width="100dp"
+            android:background="@drawable/rounded_button"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Ngày"
-            android:gravity="center_vertical"/>
+            android:text="Trở lại"/>
 
-        <Button
-            android:background="@drawable/rounded_button"
-            android:id="@+id/btnSelectDate"
-            android:layout_width="wrap_content"
+        <EditText
+            android:background="@drawable/rounded_edittext"
+            android:id="@+id/edClass"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chọn"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/txtSeletedDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="18-11-2023"
-        android:gravity="center_vertical"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Thời gian bắt đầu"
-            android:gravity="center_vertical"/>
-
-        <Button
-            android:background="@drawable/rounded_button"
-            android:id="@+id/btnStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chọn"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvStartTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="7:00 AM"
-        android:layout_marginTop="8dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Thời gian kết thúc"
-            android:gravity="center_vertical"/>
-
-        <Button
-            android:background="@drawable/rounded_button"
-            android:id="@+id/btnEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chọn"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvEndTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="9:30 AM"
-        android:layout_marginTop="8dp"/>
-
-    <EditText
-        android:background="@drawable/rounded_edittext"
-
-        android:id="@+id/etRoom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phòng"
-        android:inputType="text"
-        android:layout_marginTop="16dp"/>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <RadioButton
-            android:checked="true"
-            android:id="@+id/rbTheory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lý thuyết"/>
-
-        <RadioButton
-            android:id="@+id/rbPractice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thực hành"/>
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thiết bị trong phòng"
-        android:layout_marginTop="16dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/cbDevice1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Máy chiếu" />
-
-        <CheckBox
-            android:id="@+id/cbDevice2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Điều hòa" />
+            android:hint="Lớp"
+            android:inputType="text"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <CheckBox
-                android:id="@+id/cbDevice3"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ngày"
+                android:gravity="center_vertical"/>
+
+            <Button
+                android:background="@drawable/rounded_button"
+                android:id="@+id/btnSelectDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy chiếu" />
+                android:text="Chọn"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txtSeletedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18-11-2023"
+            android:gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thời gian bắt đầu"
+                android:gravity="center_vertical"/>
+
+            <Button
+                android:background="@drawable/rounded_button"
+                android:id="@+id/btnStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="7:00 AM"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thời gian kết thúc"
+                android:gravity="center_vertical"/>
+
+            <Button
+                android:background="@drawable/rounded_button"
+                android:id="@+id/btnEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9:30 AM"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:background="@drawable/rounded_edittext"
+
+            android:id="@+id/etRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phòng"
+            android:inputType="text"
+            android:layout_marginTop="16dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/rbTheory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lý thuyết"/>
+
+            <RadioButton
+                android:id="@+id/rbPractice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thực hành"/>
+        </RadioGroup>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Nội dung công việc"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/txtTask"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@drawable/rounded_edittext"/>
 
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/cbDevice4"
-            android:layout_width="wrap_content"
+        <!--    <TextView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="Thiết bị trong phòng"-->
+        <!--        android:layout_marginTop="16dp"/>-->
+
+        <!--    <LinearLayout-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:orientation="horizontal">-->
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/cbDevice1"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Máy chiếu" />-->
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/cbDevice2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Điều hòa" />-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="vertical">-->
+        <!--            <CheckBox-->
+        <!--                android:id="@+id/cbDevice3"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Máy chiếu" />-->
+
+        <!--        </LinearLayout>-->
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/cbDevice4"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Điều hòa" />-->
+        <!--    </LinearLayout>-->
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Điều hòa" />
+            android:text="Các sinh viên được nhắc:"
+            android:layout_marginTop="16dp"/>
+
+        <ListView
+            android:id="@+id/lvStudents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="Đánh giá" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:text="Phân công" />
+        </LinearLayout>
+
     </LinearLayout>
+</ScrollView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Các sinh viên được nhắc:"
-        android:layout_marginTop="16dp"/>
-
-    <ListView
-        android:id="@+id/lvStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        />
-
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Trở lại"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="167dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/rounded_button"
-            android:text="Đánh giá" />
-
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button"
-            android:text="Phân công" />
-    </LinearLayout>
-
-</LinearLayout>
