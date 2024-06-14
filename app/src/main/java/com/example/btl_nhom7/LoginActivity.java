@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
-       // sqlHelper.insertSampleData(db);
+        //sqlHelper.insertSampleData(db);
         studentList = sqlHelper.getAllStudent();
         teachersList = sqlHelper.getAllTeacher();
         binding.btnLogin.setOnClickListener(v -> {
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             if (student != null) {
                 Intent intent = new Intent(this, DetailOfClassActivity.class);
 
-                Toast.makeText(this, "Logged in as Student", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Chào mừng học sinh trở lại", Toast.LENGTH_SHORT).show();
                 intent.putExtra("data", student.getIdStudent());
                 startActivity(intent); // Change to your student activity
                 return;
@@ -47,13 +47,13 @@ public class LoginActivity extends AppCompatActivity {
             // Check if the user is a teacher
             Teacher teacher = sqlHelper.checkTeacherLogin(username, password);
             if (teacher != null) {
-                Toast.makeText(this, "Logged in as Teacher", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Chào mừng giảng viên trở lại", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, TeacherDetailClassActivity.class);
                 intent.putExtra("data", teacher.getId());
                 startActivity(intent); // Change to your teacher activity
                 return;
             }
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sai tên tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
         });
     }
 

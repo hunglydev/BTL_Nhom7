@@ -11,22 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.btl_nhom7.R;
 import com.example.btl_nhom7.database.SqlHelper;
 import com.example.btl_nhom7.databinding.ActivityTeacherDetailBinding;
 import com.example.btl_nhom7.model.DetailedAssignment;
 import com.example.btl_nhom7.model.Student;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,6 +89,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
             intentRating.putExtra("roomType", assignment.getRoomType()); // 0 là lý thuyết, 1 là thực hành
             intentRating.putExtra("task", assignment.getTask());
             intentRating.putExtra("roomID", roomID);
+            intentRating.putExtra("note", assignment.getNote());
+            intentRating.putExtra("isRated", assignment.getIsRated());
             startActivity(intentRating);
         });
 
@@ -113,8 +107,122 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        refreshData();
+        Intent intent = getIntent();
+        classID = intent.getStringExtra("classID");
+        String roomID = intent.getStringExtra("roomID");
+        String startTime = intent.getStringExtra("startTime");
+
+        SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        students = sqlHelper.getStudentsInClassWithRating(classID, 1);
+        String task = sqlHelper.getRoomTask(roomID);
+        binding.txtTask.setText(task);
+
+        if (assignment != null) {
+            binding.edClass.setText(assignment.getClassName());
+            binding.txtSeletedDate.setText(assignment.getDay());
+            binding.tvStartTime.setText(assignment.getStartTime());
+            binding.tvEndTime.setText(assignment.getEndTime());
+            binding.etRoom.setText(assignment.getRoomName());
+            // Adjust radio buttons based on the room method
+            binding.rbTheory.setChecked(assignment.getRoomType() == 0);
+            binding.rbPractice.setChecked(assignment.getRoomType() == 1);
+        }
+
+        // Student list setup
+        ArrayAdapter<Student> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+        binding.lvStudents.setAdapter(adapter);
+
+        // Date picker setup
+        binding.btnSelectDate.setOnClickListener(v -> showDatePicker());
+        binding.btnStartTime.setOnClickListener(v -> showTimePicker(startTimeCalendar, binding.tvStartTime));
+        binding.btnEndTime.setOnClickListener(v -> showTimePicker(endTimeCalendar, binding.tvEndTime));
+
+        // Back and confirm buttons
+        binding.btnBack.setOnClickListener(v -> finish());
+        binding.btnConfirm.setOnClickListener(v -> {
+            Intent intent1 = new Intent(this, AssignmentActivity.class);
+            intent1.putExtra("classID", classID);
+            startActivity(intent1);
+        });
+        binding.btnRating.setOnClickListener(v -> {
+            Intent intentRating = new Intent(this, RatingActivity.class);
+            // Gửi các thông tin cần thiết
+            intentRating.putExtra("classID", classID);
+            intentRating.putExtra("className", assignment.getClassName());
+            intentRating.putExtra("date", assignment.getDay());
+            intentRating.putExtra("startTime", assignment.getStartTime());
+            intentRating.putExtra("endTime", assignment.getEndTime());
+            intentRating.putExtra("roomName", assignment.getRoomName());
+            intentRating.putExtra("roomType", assignment.getRoomType()); // 0 là lý thuyết, 1 là thực hành
+            intentRating.putExtra("task", assignment.getTask());
+            intentRating.putExtra("roomID", roomID);
+            intentRating.putExtra("note", assignment.getNote());
+            intentRating.putExtra("isRated", assignment.getIsRated());
+            startActivity(intentRating);
+        });
+
         super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Intent intent = getIntent();
+        classID = intent.getStringExtra("classID");
+        String roomID = intent.getStringExtra("roomID");
+        String startTime = intent.getStringExtra("startTime");
+
+        SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        students = sqlHelper.getStudentsInClassWithRating(classID, 1);
+        String task = sqlHelper.getRoomTask(roomID);
+        binding.txtTask.setText(task);
+
+        if (assignment != null) {
+            binding.edClass.setText(assignment.getClassName());
+            binding.txtSeletedDate.setText(assignment.getDay());
+            binding.tvStartTime.setText(assignment.getStartTime());
+            binding.tvEndTime.setText(assignment.getEndTime());
+            binding.etRoom.setText(assignment.getRoomName());
+            // Adjust radio buttons based on the room method
+            binding.rbTheory.setChecked(assignment.getRoomType() == 0);
+            binding.rbPractice.setChecked(assignment.getRoomType() == 1);
+        }
+
+        // Student list setup
+        ArrayAdapter<Student> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+        binding.lvStudents.setAdapter(adapter);
+
+        // Date picker setup
+        binding.btnSelectDate.setOnClickListener(v -> showDatePicker());
+        binding.btnStartTime.setOnClickListener(v -> showTimePicker(startTimeCalendar, binding.tvStartTime));
+        binding.btnEndTime.setOnClickListener(v -> showTimePicker(endTimeCalendar, binding.tvEndTime));
+
+        // Back and confirm buttons
+        binding.btnBack.setOnClickListener(v -> finish());
+        binding.btnConfirm.setOnClickListener(v -> {
+            Intent intent1 = new Intent(this, AssignmentActivity.class);
+            intent1.putExtra("classID", classID);
+            startActivity(intent1);
+        });
+        binding.btnRating.setOnClickListener(v -> {
+            Intent intentRating = new Intent(this, RatingActivity.class);
+            // Gửi các thông tin cần thiết
+            intentRating.putExtra("classID", classID);
+            intentRating.putExtra("className", assignment.getClassName());
+            intentRating.putExtra("date", assignment.getDay());
+            intentRating.putExtra("startTime", assignment.getStartTime());
+            intentRating.putExtra("endTime", assignment.getEndTime());
+            intentRating.putExtra("roomName", assignment.getRoomName());
+            intentRating.putExtra("roomType", assignment.getRoomType()); // 0 là lý thuyết, 1 là thực hành
+            intentRating.putExtra("task", assignment.getTask());
+            intentRating.putExtra("roomID", roomID);
+            intentRating.putExtra("note", assignment.getNote());
+            intentRating.putExtra("isRated", assignment.getIsRated());
+            startActivity(intentRating);
+        });
+
+        super.onResume();
     }
 
     private void showTimePicker(Calendar calendar, TextView timeTextView) {
@@ -168,9 +276,28 @@ refreshData();
 
     private void refreshData() {
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
+
+        // Retrieve the latest assignment details
+        String roomID = getIntent().getStringExtra("roomID");
+        String startTime = getIntent().getStringExtra("startTime");
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+
+        if (assignment != null) {
+            binding.edClass.setText(assignment.getClassName());
+            binding.txtSeletedDate.setText(assignment.getDay());
+            binding.tvStartTime.setText(assignment.getStartTime());
+            binding.tvEndTime.setText(assignment.getEndTime());
+            binding.etRoom.setText(assignment.getRoomName());
+            binding.rbTheory.setChecked(assignment.getRoomType() == 0);
+            binding.rbPractice.setChecked(assignment.getRoomType() == 1);
+            binding.txtTask.setText(assignment.getTask());
+        }
+
+        // Update the list of students
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
         ArrayAdapter<Student> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
         binding.lvStudents.setAdapter(adapter);
     }
+
 
 }

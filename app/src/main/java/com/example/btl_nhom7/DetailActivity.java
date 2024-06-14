@@ -67,6 +67,12 @@ public class DetailActivity extends AppCompatActivity {
 
                 binding.rbPractice.setChecked(true);binding.rbTheory.setChecked(false);
             }
+            if(assignment.getIsRated()==0){
+                binding.rbIsNotRated.setChecked(true);
+            }
+            else {
+                binding.rbIsRated.setChecked(true);
+            }
         }
         ListView lvStudents = findViewById(R.id.lvStudents);
         ArrayAdapter<Student> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
@@ -77,6 +83,8 @@ public class DetailActivity extends AppCompatActivity {
     private void disableButton(){
         binding.rbPractice.setClickable(false);
         binding.rbTheory.setClickable(false);
+        binding.rbIsRated.setClickable(false);
+        binding.rbIsNotRated.setClickable(false);
 //        binding.cbDevice1.setClickable(false);
 //        binding.cbDevice2.setClickable(false);
 //        binding.cbDevice3.setClickable(false);

@@ -63,6 +63,7 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (idStudent) REFERENCES " + TABLE_STUDENT + "(idStudent), " +
                 "FOREIGN KEY (idClass) REFERENCES " + TABLE_CLASS + "(ID));");
 
+
         db.execSQL("CREATE TABLE " + TABLE_ASSIGNMENT + " (" +
                 "ClassID TEXT, " +
                 "Day TEXT, " +
@@ -70,10 +71,13 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "EndTime TEXT, " +
                 "RoomID TEXT, " +
                 "TeacherID TEXT, " +
+                "Note TEXT, " +  // Assume Note column is already added as per previous instructions
+                "IsRated INTEGER DEFAULT 0, " + // New column, default value 0 indicating not rated
                 "PRIMARY KEY (ClassID, Day, StartTime, RoomID), " +
                 "FOREIGN KEY (ClassID) REFERENCES " + TABLE_CLASS + "(ID), " +
                 "FOREIGN KEY (TeacherID) REFERENCES " + TABLE_TEACHER + "(ID), " +
                 "FOREIGN KEY (RoomID) REFERENCES " + TABLE_ROOM + "(ID));");
+
     }
 
     @Override
@@ -124,8 +128,8 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C04', 1, 'Lop 12A4');");
 
         // Insert data into the Assignment table
-        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C03', '22-10-2023', '10:00', '12:00', 'R03', 'T01');");
-        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID) VALUES ('C04', '23-10-2023', '11:00', '13:00', 'R04', 'T02');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C03', '22-10-2023', '10:00', '12:00', 'R03', 'T01', 'hehe');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C04', '23-10-2023', '11:00', '13:00', 'R04', 'T02', '');");
     }
 
 
@@ -180,9 +184,10 @@ public class SqlHelper extends SQLiteOpenHelper {
                 String endTime = cursor.getString(3);
                 String roomId = cursor.getString(4);
                 String teacherId = cursor.getString(5);
-
+                String note = cursor.getString(6);
+                int isRated = cursor.getInt(7);
                 // Create an Assignment object and add it to the list
-                assignments.add(new Assignment(classId,day, startTime, endTime, roomId, teacherId));
+                assignments.add(new Assignment(classId,day, startTime, endTime, roomId, teacherId, note,isRated));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -278,7 +283,8 @@ public class SqlHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         DetailedAssignment detailedAssignment = null;
 
-        String query = "SELECT Class.Name, Assignment.Day, Assignment.StartTime, Assignment.EndTime, Room.Name, Room.Method, Room.Task " +
+        // Include all necessary columns in your SELECT statement
+        String query = "SELECT Class.Name, Assignment.Day, Assignment.StartTime, Assignment.EndTime, Room.Name, Room.Method, Room.Task, Assignment.note, Assignment.isRated " +
                 "FROM Assignment " +
                 "JOIN Class ON Assignment.ClassID = Class.ID " +
                 "JOIN Room ON Assignment.RoomID = Room.ID " +
@@ -293,13 +299,17 @@ public class SqlHelper extends SQLiteOpenHelper {
             String roomName = cursor.getString(4);
             int method = cursor.getInt(5);
             String task = cursor.getString(6);
+            String note = cursor.getString(7);  // Assuming 'note' is at index 7
+            int isRated = cursor.getInt(8);     // Assuming 'isRated' is at index 8
 
-            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method, task);
+            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method, task, note, isRated);
         }
         cursor.close();
         db.close();
         return detailedAssignment;
     }
+
+
 
 
     public ArrayList<String> getClassesOfTeacher(String teacherId) {
@@ -349,5 +359,21 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();      // Close the database connection
         return task;     // Return the retrieved task or null if not found
     }
+    public void updateAssignment(String classID, String day, String startTime, String roomID, String note, int isRated) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Note", note);
+        values.put("IsRated", isRated);
+
+        // Build the WHERE clause using the primary key components
+        String whereClause = "ClassID = ? AND Day = ? AND StartTime = ? AND RoomID = ?";
+        String[] whereArgs = { classID, day, startTime, roomID };
+
+        // Execute the update on the database table
+        db.update(TABLE_ASSIGNMENT, values, whereClause, whereArgs);
+        db.close();
+    }
+
+
 
 }

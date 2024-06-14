@@ -142,6 +142,7 @@
 
         </LinearLayout>
 
+
         <!--    <TextView-->
         <!--        android:layout_width="match_parent"-->
         <!--        android:layout_height="wrap_content"-->
@@ -182,10 +183,43 @@
         <!--            android:enabled="false" />-->
         <!--    </LinearLayout>-->
 
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Trạng thái"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"/>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/rbIsNotRated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chưa đánh giá"
+                    android:enabled="false"/>
+
+                <RadioButton
+                    android:id="@+id/rbIsRated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đã đánh giá"
+                    android:enabled="false"/>
+            </RadioGroup>
+
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Các sinh viên được nhắc:"
+            android:text="Các sinh viên trực nhật:"
             android:layout_marginTop="16dp"/>
 
         <ListView
