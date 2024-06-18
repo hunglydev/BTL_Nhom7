@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
-        //sqlHelper.insertSampleData(db);
+        sqlHelper.insertSampleData(db);
         studentList = sqlHelper.getAllStudent();
         teachersList = sqlHelper.getAllTeacher();
         binding.btnLogin.setOnClickListener(v -> {

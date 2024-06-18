@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.btl_nhom7.R;
 import com.example.btl_nhom7.database.SqlHelper;
+import com.example.btl_nhom7.model.DetailedAssignment;
 import com.example.btl_nhom7.model.Student;
 
 import java.util.ArrayList;
@@ -49,6 +50,17 @@ public class RatingActivity extends AppCompatActivity {
 
         // Load students
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
+        DetailedAssignment detailedAssignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime, date);
+        if (detailedAssignment != null) {
+            binding.txtTask.setText(detailedAssignment.getTask());
+            binding.txtReason.setText(detailedAssignment.getNote()); // Displaying the note
+            if (detailedAssignment.getIsRated() == 1) {
+                binding.rdIsRated.setChecked(true);
+                disableRatingControls();
+            }
+        } else {
+            Log.d("RatingActivity", "No detailed assignment found");
+        }
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
         students.forEach(student -> binding.txtStudent.append(student.toString() + "\n"));
 
@@ -80,12 +92,15 @@ public class RatingActivity extends AppCompatActivity {
     }
 
     private void updateStudentRating(int newRating, SqlHelper sqlHelper) {
+        String note = binding.txtReason.getText().toString(); // Get the note from the UI
         for (Student student : students) {
             sqlHelper.updateStudentRating(student.getIdStudent(), classID, newRating);
         }
-        updateAssignmentDetails(sqlHelper, newRating);
+        updateAssignmentDetails(sqlHelper, newRating); // Pass note to the assignment update
+        Toast.makeText(this, "Ratings and notes updated successfully.", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 
     private void updateAssignmentDetails(SqlHelper sqlHelper, int newRating) {
         String note = binding.txtReason.getText().toString();

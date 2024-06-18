@@ -52,6 +52,7 @@ public class DetailOfClassActivity extends AppCompatActivity {
                 intent.putExtra("classID", assignments.get(position).getIdClass());
                 intent.putExtra("roomID", assignments.get(position).getIdRoom());
                 intent.putExtra("startTime", assignments.get(position).getStartTime());
+                intent.putExtra("day", assignments.get(position).getDay());
                 startActivity(intent);
             }
         });

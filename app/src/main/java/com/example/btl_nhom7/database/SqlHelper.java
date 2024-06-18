@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import com.example.btl_nhom7.model.Assignment;
 import com.example.btl_nhom7.model.DetailedAssignment;
@@ -104,31 +106,33 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_TEACHER + " (ID, Name, Password) VALUES ('T02', 'Nguyen Van C', 'pass456');");
 
         // Insert data into the Room table
-        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R01', 'Phong 101', 'Projector, Whiteboard', 'Lecture', 1);");
-        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R02', 'Phong 102', 'Computers, Projector', 'Lab', 0);");
-        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R03', 'Lab 301', 'Computers, Projector', 'Lab', 1);");
-        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R04', 'Phong 104', 'Whiteboard', 'Seminar', 0);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R01', 'Phong 101', 'Projector, Whiteboard', 'Lay dieu khien may chieu, dieu hoa, chia khoa, lau nha', 1);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R02', 'Phong 102', 'Computers, Projector', 'Kiem tra cac thiet bi trong lop, quet nha', 0);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R03', 'Lab 301', 'Computers, Projector', 'Lay dieu khien may chieu, dieu hoa, chia khoa, quet nha', 1);");
+        db.execSQL("INSERT INTO " + TABLE_ROOM + " (ID, Name, Devices, Task, Method) VALUES ('R04', 'Phong 104', 'Whiteboard', 'Kiem tra cac thiet bi trong lop, quet nha', 0);");
 
         // Insert data into the Class table
-        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop 12A1', 'T01');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C02', 'Lop 12A2', 'T02');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C03', 'Lop 12A3', 'T01');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C04', 'Lop 12A4', 'T02');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C01', 'Lop Tich hop he thong phan mem', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C02', 'Lop Thiet ke web', 'T02');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C03', 'Lop Phat trien ung dung tren thiet bi di dong', 'T01');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS + " (ID, Name, TeacherID) VALUES ('C04', 'Lop Kiem thu phan mem', 'T02');");
 
         // Insert data into the ClassStudent table
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 1, 'Lop 12A1');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C02', 0, 'Lop 12A2');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C03', 2, 'Lop 12A3');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 0, 'Lop 12A2');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C03', 0, 'Lop 12A2');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C01', 2, 'Lop 12A3');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C03', 0, 'Lop 12A3');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C01', 1, 'Lop 12A4');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C02', 1, 'Lop 12A2');");
-        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C04', 1, 'Lop 12A4');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C01', 1, 'Lop Tich hop he thong phan mem');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C02', 0, 'Lop Thiet ke web');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602743', 'C03', 0, 'Lop Phat trien ung dung tren thiet bi di dong');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C01', 0, 'Lop Thiet ke web');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C03', 0, 'Lop Thiet ke web');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C01', 2, 'Lop Phat trien ung dung tren thiet bi di dong');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602334', 'C03', 0, 'Lop Phat trien ung dung tren thiet bi di dong');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C01', 1, 'Lop Kiem thu phan mem');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602333', 'C02', 1, 'Lop Thiet ke web');");
+        db.execSQL("INSERT INTO " + TABLE_CLASS_STUDENT + " (idStudent, idClass, rating, className) VALUES ('2021602335', 'C04', 1, 'Lop Kiem thu phan mem');");
 
         // Insert data into the Assignment table
-        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C03', '22-10-2023', '10:00', '12:00', 'R03', 'T01', 'hehe');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C03', '22-10-2023', '10:00', '12:00', 'R03', 'T01', '');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C03', '24-10-2023', '10:00', '12:00', 'R03', 'T01', '');");
+        db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C03', '26-10-2023', '10:00', '12:00', 'R03', 'T01', '');");
         db.execSQL("INSERT INTO " + TABLE_ASSIGNMENT + " (ClassID, Day, StartTime, EndTime, RoomID, TeacherID, Note) VALUES ('C04', '23-10-2023', '11:00', '13:00', 'R04', 'T02', '');");
     }
 
@@ -279,7 +283,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();
         return students;
     }
-    public DetailedAssignment getDetailedAssignment(String classID, String roomID, String startTime) {
+    public DetailedAssignment getDetailedAssignment(String classID, String roomID, String startTime, String day) {
         SQLiteDatabase db = this.getReadableDatabase();
         DetailedAssignment detailedAssignment = null;
 
@@ -288,12 +292,12 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "FROM Assignment " +
                 "JOIN Class ON Assignment.ClassID = Class.ID " +
                 "JOIN Room ON Assignment.RoomID = Room.ID " +
-                "WHERE Assignment.ClassID = ? AND Assignment.RoomID = ? AND Assignment.StartTime = ?";
+                "WHERE Assignment.ClassID = ?AND Assignment.Day = ?AND Assignment.RoomID = ? AND Assignment.StartTime = ?";
 
-        Cursor cursor = db.rawQuery(query, new String[]{classID, roomID, startTime});
+        Cursor cursor = db.rawQuery(query, new String[]{classID,day, roomID, startTime});
         if (cursor.moveToFirst()) {
             String className = cursor.getString(0);
-            String day = cursor.getString(1);
+            String day1 = cursor.getString(1);
             String start = cursor.getString(2);
             String end = cursor.getString(3);
             String roomName = cursor.getString(4);
@@ -302,7 +306,7 @@ public class SqlHelper extends SQLiteOpenHelper {
             String note = cursor.getString(7);  // Assuming 'note' is at index 7
             int isRated = cursor.getInt(8);     // Assuming 'isRated' is at index 8
 
-            detailedAssignment = new DetailedAssignment(className, day, start, end, roomName, method, task, note, isRated);
+            detailedAssignment = new DetailedAssignment(className, day1, start, end, roomName, method, task, note, isRated);
         }
         cursor.close();
         db.close();
@@ -361,19 +365,81 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
     public void updateAssignment(String classID, String day, String startTime, String roomID, String note, int isRated) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("Note", note);
-        values.put("IsRated", isRated);
+        Cursor cursor = null;
+        try {
+            db.beginTransaction();  // Start transaction
 
-        // Build the WHERE clause using the primary key components
-        String whereClause = "ClassID = ? AND Day = ? AND StartTime = ? AND RoomID = ?";
-        String[] whereArgs = { classID, day, startTime, roomID };
+            // Define the WHERE clause to check how many entries will be updated
+            String whereClause = "ClassID = ? AND Day = ? AND StartTime = ? AND RoomID = ?";
+            String[] whereArgs = { classID, day, startTime, roomID };
 
-        // Execute the update on the database table
-        db.update(TABLE_ASSIGNMENT, values, whereClause, whereArgs);
-        db.close();
+            // Query to count the matching records
+            cursor = db.query(TABLE_ASSIGNMENT, new String[] {"COUNT(*)"}, whereClause, whereArgs, null, null, null);
+            int count = 0;
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+
+            if (count == 1) {  // Check if exactly one record matches
+                ContentValues values = new ContentValues();
+                values.put("Note", note);
+                values.put("IsRated", isRated);
+
+                // Perform the update on the database table
+                int rowsAffected = db.update(TABLE_ASSIGNMENT, values, whereClause, whereArgs);
+                if (rowsAffected > 0) {
+                    db.setTransactionSuccessful();  // Mark the transaction as successful
+                }
+            } else {
+                Log.e("SqlHelper", "Error: Multiple or no assignments match the update criteria");
+            }
+
+            db.endTransaction();  // End transaction
+        } catch (Exception e) {
+            Log.e("SqlHelper", "Error updating assignment", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();  // Close the database regardless of whether the transaction was successful
+        }
     }
 
 
+    public ArrayList<Assignment> getAllAssignmentsOfClass(String classId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Assignment> assignments = new ArrayList<>();
+
+        // Prepare your SQL query to fetch all assignments for a specific class
+        String query = "SELECT * FROM " + TABLE_ASSIGNMENT + " WHERE ClassID = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{classId});
+
+        // Traverse through the result set and create Assignment objects
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String idClass = cursor.getString(0);
+                    String day = cursor.getString(1);
+                    String startTime = cursor.getString(2);
+                    String endTime = cursor.getString(3);
+                    String roomID = cursor.getString(4);
+                    String teacherID = cursor.getString(5);
+                    String note = cursor.getString(6);
+                    int isRated = cursor.getInt(7);
+
+                    // Assuming there's a constructor in Assignment class that matches this data structure
+                    Assignment assignment = new Assignment(idClass, day, startTime, endTime, roomID, teacherID, note, isRated);
+                    assignments.add(assignment);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();  // Close the cursor to avoid memory leaks
+            }
+        }
+
+        db.close();  // Close the database connection
+        return assignments;
+    }
 
 }

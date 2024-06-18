@@ -50,14 +50,17 @@ public class TeacherDetailClassActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(String classId) {
-        ArrayList<Assignment> assignments = sqlHelper.getAllAssignmentOfClass(classId);
+        // Assuming 'day' is now part of the Assignment model and you want to use it as well
+        assignments = sqlHelper.getAllAssignmentsOfClass(classId);
         AssignmentAdapter adapter = new AssignmentAdapter(this, new AssignmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                Assignment assignment = assignments.get(position);
                 Intent intent = new Intent(TeacherDetailClassActivity.this, TeacherDetailActivity.class);
-                intent.putExtra("classID", assignments.get(position).getIdClass());
-                intent.putExtra("roomID", assignments.get(position).getIdRoom());
-                intent.putExtra("startTime", assignments.get(position).getStartTime());
+                intent.putExtra("classID", assignment.getIdClass());
+                intent.putExtra("roomID", assignment.getIdRoom());
+                intent.putExtra("startTime", assignment.getStartTime());
+                intent.putExtra("day", assignment.getDay());  // Passing the 'day' to the DetailActivity
                 startActivity(intent);
             }
         });
@@ -66,6 +69,7 @@ public class TeacherDetailClassActivity extends AppCompatActivity {
         binding.rcvDetailOfClass.setLayoutManager(linearLayoutManager);
         binding.rcvDetailOfClass.setAdapter(adapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

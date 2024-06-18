@@ -29,7 +29,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     ActivityTeacherDetailBinding binding;
     private Calendar startTimeCalendar, endTimeCalendar;
     ArrayList<Student> students = new ArrayList<>();
-    String classID;
+    String classID, day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +43,9 @@ public class TeacherDetailActivity extends AppCompatActivity {
         classID = intent.getStringExtra("classID");
         String roomID = intent.getStringExtra("roomID");
         String startTime = intent.getStringExtra("startTime");
-
+        day = intent.getStringExtra("day");
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
-        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime,day);
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
         String task = sqlHelper.getRoomTask(roomID);
         binding.txtTask.setText(task);
@@ -113,7 +113,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         String startTime = intent.getStringExtra("startTime");
 
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
-        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime,day);
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
         String task = sqlHelper.getRoomTask(roomID);
         binding.txtTask.setText(task);
@@ -173,7 +173,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         String startTime = intent.getStringExtra("startTime");
 
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
-        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime,day);
         students = sqlHelper.getStudentsInClassWithRating(classID, 1);
         String task = sqlHelper.getRoomTask(roomID);
         binding.txtTask.setText(task);
@@ -280,7 +280,7 @@ refreshData();
         // Retrieve the latest assignment details
         String roomID = getIntent().getStringExtra("roomID");
         String startTime = getIntent().getStringExtra("startTime");
-        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime,day);
 
         if (assignment != null) {
             binding.edClass.setText(assignment.getClassName());

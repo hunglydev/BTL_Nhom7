@@ -31,6 +31,7 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:enabled="false"
         android:background="@drawable/rounded_edittext"
         android:id="@+id/etMSV"
         android:layout_width="match_parent"
@@ -46,7 +47,7 @@
 
     <EditText
         android:background="@drawable/rounded_edittext"
-
+        android:enabled="false"
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

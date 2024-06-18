@@ -29,6 +29,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnStartTime, btnEndTime;
 
     private Calendar startTimeCalendar, endTimeCalendar;
+    String day;
     ActivityDetailBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,10 @@ public class DetailActivity extends AppCompatActivity {
         String classID = intent.getStringExtra("classID");
         String roomID = intent.getStringExtra("roomID");
         String startTime = intent.getStringExtra("startTime");
+        day = intent.getStringExtra("day");
         SqlHelper sqlHelper = new SqlHelper(getApplicationContext());
         ArrayList<Student> students = sqlHelper.getStudentsInClassWithRating(classID,1);
-        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime);
+        DetailedAssignment assignment = sqlHelper.getDetailedAssignment(classID, roomID, startTime,day);
         String task = sqlHelper.getRoomTask(roomID);
         binding.txtTask.setText(task);
         if (assignment != null) {
